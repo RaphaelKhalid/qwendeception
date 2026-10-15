@@ -326,7 +326,7 @@
   "uncensored:PARTIAL": 94,
   "uncensored:ACCURATE": 127
  },
- "n_pool_unjudged": 440,
+ "n_pool_unjudged": 15840,
  "n_neutral": 200,
  "n_western": 120,
  "probe_by_label": {
@@ -770,23 +770,23 @@
  "counterfactual": {
   "linear": {
    "n_questions": 56,
-   "mean_diff_uncensored_minus_normal": 0.029,
-   "share_questions_lower_when_uncensored": 0.357
+   "mean_diff_uncensored_minus_normal": 0.019,
+   "share_questions_lower_when_uncensored": 0.464
   },
   "mlp": {
    "n_questions": 56,
-   "mean_diff_uncensored_minus_normal": 0.008,
+   "mean_diff_uncensored_minus_normal": -0.003,
    "share_questions_lower_when_uncensored": 0.5
   },
   "efc": {
    "n_questions": 56,
-   "mean_diff_uncensored_minus_normal": 0.861,
-   "share_questions_lower_when_uncensored": 0.304
+   "mean_diff_uncensored_minus_normal": 0.891,
+   "share_questions_lower_when_uncensored": 0.268
   },
   "axial": {
    "n_questions": 56,
-   "mean_diff_uncensored_minus_normal": 1.259,
-   "share_questions_lower_when_uncensored": 0.304
+   "mean_diff_uncensored_minus_normal": 1.268,
+   "share_questions_lower_when_uncensored": 0.232
   }
  },
  "instructed_lie": {
