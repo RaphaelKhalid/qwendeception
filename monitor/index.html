@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qwen Interrogation Live</title>
+<style>
+  :root {
+    --bg: #000; --panel: #07070a; --line: #16161d; --text: #f2f2f7; --dim: #7c7c8a;
+    --hot: #ff2d55; --orange: #ff9f0a; --lime: #30d158; --cyan: #32d7ff; --violet: #bf5af2; --gold: #ffd60a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 18px 16px 60px; }
+  header { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+  h1 { font-size: clamp(20px, 3.2vw, 32px); margin: 0; letter-spacing: .02em; font-weight: 800;
+    background: linear-gradient(90deg, var(--hot), var(--orange), var(--gold)); -webkit-background-clip: text;
+    background-clip: text; color: transparent; }
+  .pill { padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); font-size: 13px; color: var(--dim); }
+  .pill.live { color: var(--lime); border-color: #1d4d2a; box-shadow: 0 0 18px #30d15833; }
+  .pill.live::before { content: "●"; margin-right: 6px; animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: .2 } }
+  .sub { color: var(--dim); font-size: 13px; width: 100%; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; position: relative; overflow: hidden; }
+  .card .k { color: var(--dim); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+  .card .v { font: 800 clamp(24px, 3.4vw, 36px)/1.1 ui-monospace, "Cascadia Code", Consolas, monospace; margin-top: 6px;
+    font-variant-numeric: tabular-nums; }
+  .card .e { position: absolute; right: 12px; top: 10px; font-size: 26px; filter: drop-shadow(0 0 8px #fff3); }
+  .v.hot { color: var(--hot); } .v.lime { color: var(--lime); } .v.cyan { color: var(--cyan); }
+  .v.violet { color: var(--violet); } .v.gold { color: var(--gold); } .v.orange { color: var(--orange); }
+  .bump { animation: bump .45s ease-out; }
+  @keyframes bump { 0% { transform: scale(1.12); text-shadow: 0 0 22px currentColor } 100% { transform: scale(1) } }
+  .budget { margin: 14px 0 6px; }
+  .bar { height: 14px; background: #0d0d12; border-radius: 99px; overflow: hidden; border: 1px solid var(--line); }
+  .bar > i { display: block; height: 100%; width: 0; border-radius: 99px; transition: width .8s ease;
+    background: linear-gradient(90deg, var(--lime), var(--gold), var(--hot)); box-shadow: 0 0 16px #ff9f0a66; }
+  .row { display: flex; justify-content: space-between; color: var(--dim); font-size: 13px; margin-top: 6px; gap: 8px; flex-wrap: wrap; }
+  h2 { font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: .12em; margin: 26px 0 10px; }
+  .stages { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .stage { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+  .stage .n { font-weight: 700; display: flex; justify-content: space-between; gap: 6px; }
+  .stage .p { color: var(--dim); font-size: 12px; margin: 4px 0 6px; font-variant-numeric: tabular-nums; }
+  .stage .bar { height: 8px; }
+  .stage.running { border-color: #ff9f0a88; box-shadow: 0 0 22px #ff9f0a22; }
+  .stage.done { border-color: #30d15855; }
+  .stage.failed { border-color: #ff2d5588; }
+  .stage.done .bar > i { background: var(--lime); }
+  .cols { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+  .feed, .finds { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 8px 4px;
+    max-height: 520px; overflow-y: auto; }
+  .ev { display: grid; grid-template-columns: 34px 1fr; gap: 6px; padding: 7px 10px; border-bottom: 1px solid #0f0f14;
+    animation: in .5s ease-out; }
+  .ev:last-child { border-bottom: 0; }
+  @keyframes in { from { opacity: 0; transform: translateX(-12px); background: #ffffff10 } to { opacity: 1 } }
+  .ev .em { font-size: 20px; text-align: center; }
+  .ev .m { word-break: break-word; }
+  .ev .t { color: var(--dim); font-size: 11.5px; font-family: ui-monospace, Consolas, monospace; }
+  .tag { font-size: 11px; padding: 1px 7px; border-radius: 99px; background: #15151c; color: var(--cyan); margin-right: 6px; }
+  .tag.local { color: var(--violet); }
+  .find .m { font-weight: 600; }
+  .hi { color: var(--gold); text-shadow: 0 0 12px #ffd60a55; }
+  #flash { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(circle, #ff9f0a22, transparent 70%);
+    opacity: 0; transition: opacity .6s; }
+  canvas#confetti { position: fixed; inset: 0; pointer-events: none; }
+  .empty { color: var(--dim); padding: 14px; }
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas><div id="flash"></div>
+<div class="wrap">
+  <header>
+    <h1>🔥 Qwen3.5-9B Interrogation</h1>
+    <span id="status" class="pill">waiting for pod…</span>
+    <span id="gpu" class="pill">GPU —</span>
+    <div class="sub">Does the model know its CCP-steered answers are false? Deception probes (Hollinsworth et al., 2026) vs political steering · repo: qwendeception</div>
+  </header>
+
+  <div class="grid">
+    <div class="card"><span class="e">💸</span><div class="k">spent</div><div class="v hot" id="spent">$0.000</div></div>
+    <div class="card"><span class="e">⏱️</span><div class="k">elapsed</div><div class="v cyan" id="elapsed">00:00:00</div></div>
+    <div class="card"><span class="e">🧠</span><div class="k">tokens generated</div><div class="v gold" id="tokens">0</div></div>
+    <div class="card"><span class="e">🕵️</span><div class="k">transcripts lie-tested</div><div class="v violet" id="probed">0</div></div>
+    <div class="card"><span class="e">⚡</span><div class="k">tok / s</div><div class="v orange" id="tps">0</div></div>
+    <div class="card"><span class="e">🏆</span><div class="k">findings</div><div class="v lime" id="nfind">0</div></div>
+  </div>
+
+  <div class="budget">
+    <div class="bar"><i id="budgetbar"></i></div>
+    <div class="row"><span id="budgettxt">budget —</span><span id="ratetxt"></span><span id="remaining"></span></div>
+  </div>
+
+  <h2>⚙️ pipeline</h2>
+  <div class="stages" id="stages"></div>
+
+  <div class="cols">
+    <div><h2>🎯 findings</h2><div class="finds" id="finds"><div class="empty">no findings yet… the suspense 😤</div></div></div>
+    <div><h2>📡 live feed</h2><div class="feed" id="feed"></div></div>
+  </div>
+</div>
+<script>
+const STAGES = [
+  ["sanity_fibs", "🧪", "probe sanity"], ["generate", "🚀", "interrogate"], ["probe", "🕵️", "lie detector"],
+  ["elicit", "🗝️", "knowledge test"], ["lens", "🔭", "logit lens"], ["direction", "🧲", "censor direction"],
+  ["thinking", "💭", "private thoughts"], ["base", "🏛️", "base model"], ["scale", "📈", "scale up"]];
+const st = { next: 0, tokens: 0, probed: 0, tps: 0, finds: 0, stages: {}, cost: null, startTs: null, live: false, finished: false };
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("en-US");
+const hms = s => { s = Math.max(0, Math.floor(s)); return [s / 3600 | 0, (s % 3600) / 60 | 0, s % 60].map(x => String(x).padStart(2, "0")).join(":"); };
+
+function setVal(id, text) { const el = $(id); if (el.textContent !== text) { el.textContent = text; el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); } }
+
+// smooth count-up
+const shown = { tokens: 0, probed: 0 };
+function tick() {
+  for (const k of ["tokens", "probed"]) {
+    const target = st[k];
+    if (shown[k] < target) { shown[k] = Math.min(target, shown[k] + Math.max(1, Math.ceil((target - shown[k]) / 8))); $(k).textContent = fmt(shown[k]); }
+  }
+  if (st.cost) {
+    const live = !st.finished && st.cost.running;
+    const extra = live ? (Date.now() / 1000 - st.cost.ts) : 0;
+    const spent = st.cost.spent + extra * st.cost.rate / 3600;
+    $("spent").textContent = "$" + spent.toFixed(3);
+    $("elapsed").textContent = hms(st.cost.elapsed + extra);
+    const pct = Math.min(100, 100 * spent / st.cost.cap);
+    $("budgetbar").style.width = pct.toFixed(1) + "%";
+    $("budgettxt").textContent = `budget $${spent.toFixed(2)} / $${st.cost.cap.toFixed(2)} (${pct.toFixed(0)}%)`;
+    $("ratetxt").textContent = `${st.cost.gpu || ""} @ $${st.cost.rate.toFixed(2)}/hr`;
+    $("remaining").textContent = live ? `⏳ ${hms((st.cost.cap - spent) / st.cost.rate * 3600)} of compute left` : (st.finished ? "🏁 pod terminated" : "");
+  }
+  requestAnimationFrame(tick);
+}
+
+function renderStages() {
+  $("stages").innerHTML = STAGES.map(([k, e, label]) => {
+    const s = st.stages[k] || {};
+    const cls = s.state || "pending";
+    const icon = { pending: "⏳", running: "▶️", done: "✅", failed: "💥", skipped: "⏭️" }[cls];
+    const pct = s.total ? Math.min(100, 100 * s.done / s.total) : (cls === "done" ? 100 : 0);
+    const p = s.total ? `${fmt(s.done)} / ${fmt(s.total)}` : (cls === "done" ? `done in ${Math.round(s.seconds || 0)}s` : cls);
+    return `<div class="stage ${cls}"><div class="n"><span>${e} ${label}</span><span>${icon}</span></div>
+      <div class="p">${p}</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+  }).join("");
+}
+
+function esc(s) { return String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])); }
+function highlight(msg) { return esc(msg).replace(/(AUROC \d\.\d+|= \d\.\d+|\d+\/\d+ accurate)/g, '<span class="hi">$1</span>'); }
+
+function addEvent(e, isNew) {
+  if (e.kind === "cost") { st.cost = e; $("status").textContent = e.running ? "LIVE" : "finished"; $("status").className = "pill" + (e.running ? " live" : ""); return; }
+  const time = e.ts ? new Date(e.ts * 1000).toLocaleTimeString() : "";
+  const row = `<div class="ev"><div class="em">${e.emoji || "•"}</div><div><div class="m">${highlight(e.msg || "")}</div>
+     <div class="t"><span class="tag ${e.src === "local" ? "local" : ""}">${esc(e.stage || "")}</span>${time}</div></div></div>`;
+  const feed = $("feed");
+  feed.insertAdjacentHTML("afterbegin", row);
+  while (feed.children.length > 300) feed.lastChild.remove();
+  if (e.tokens) st.tokens += e.tokens;
+  if (e.probed) st.probed += e.probed;
+  if (e.tps) { st.tps = e.tps; setVal("tps", String(Math.round(e.tps))); }
+  if (e.vram_used_gb) $("gpu").textContent = `🎮 VRAM ${e.vram_used_gb}/${e.vram_total_gb} GB`;
+  if (e.kind === "cost") { st.cost = e; $("status").textContent = e.running ? "LIVE" : (st.finished ? "finished" : "pod idle"); $("status").className = "pill" + (e.running ? " live" : ""); }
+  const s = st.stages[e.stage] = st.stages[e.stage] || {};
+  if (e.kind === "stage_start") { s.state = "running"; s.done = 0; s.total = 0; }
+  if (e.kind === "progress" && e.total) { s.done = e.done; s.total = e.total; if (s.state !== "done") s.state = "running"; }
+  if (e.kind === "stage_done") { s.state = "done"; s.seconds = e.seconds; if (isNew) confetti(); }
+  if (e.kind === "stage_failed") s.state = "failed";
+  if (e.kind === "skipped") s.state = "skipped";
+  if (e.kind === "finished" || e.kind === "terminated") { st.finished = true; if (isNew) { confetti(); confetti(); } }
+  if (e.kind === "finding") {
+    st.finds++; setVal("nfind", String(st.finds));
+    if (st.finds === 1) $("finds").innerHTML = "";
+    $("finds").insertAdjacentHTML("afterbegin", `<div class="ev find"><div class="em">${e.emoji || "🎯"}</div><div><div class="m">${highlight(e.msg)}</div><div class="t"><span class="tag">${esc(e.stage)}</span>${time}</div></div></div>`);
+    if (isNew) { $("flash").style.opacity = 1; setTimeout(() => $("flash").style.opacity = 0, 350); }
+  }
+}
+
+async function poll() {
+  try {
+    const r = await fetch(`/events?since=${st.next}`, { cache: "no-store" });
+    const j = await r.json();
+    const fresh = st.next > 0;
+    j.events.forEach(e => addEvent(e, fresh));
+    st.next = j.next;
+    if (j.events.length) renderStages();
+  } catch (err) { /* server restarting */ }
+  if (!window.STATIC_EVENTS) setTimeout(poll, 1000);
+}
+
+// confetti 🎉
+const cv = $("confetti"), cx = cv.getContext("2d"); let parts = [];
+function resize() { cv.width = innerWidth; cv.height = innerHeight; } addEventListener("resize", resize); resize();
+function confetti() {
+  const colors = ["#ff2d55", "#ff9f0a", "#ffd60a", "#30d158", "#32d7ff", "#bf5af2"];
+  for (let i = 0; i < 90; i++) parts.push({ x: innerWidth / 2, y: innerHeight / 3, vx: (Math.random() - .5) * 14, vy: Math.random() * -12 - 2, life: 90, c: colors[i % 6], r: Math.random() * 6 + 3 });
+}
+(function anim() { cx.clearRect(0, 0, cv.width, cv.height); parts = parts.filter(p => p.life-- > 0);
+  for (const p of parts) { p.x += p.vx; p.y += p.vy; p.vy += .35; cx.globalAlpha = p.life / 90; cx.fillStyle = p.c; cx.fillRect(p.x, p.y, p.r, p.r * .6); }
+  requestAnimationFrame(anim); })();
+
+renderStages(); requestAnimationFrame(tick);
+if (window.STATIC_EVENTS) { window.STATIC_EVENTS.forEach(e => addEvent(e, false)); renderStages(); } else poll();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+results/pod.json
+results/*.pt
+results/pod/*.pt
