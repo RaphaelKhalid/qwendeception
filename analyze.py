@@ -137,29 +137,35 @@ pool = []  # dict(arch scores, label, cond, id, set)
 for r in answers:
     sc = scores.get((r["set"], r["id"]))
     if sc and r["set"] in ("ccp_en", "ccp_zh"):
-        pool.append(dict(src="greedy", cond="normal", set=r["set"], id=r["id"], label=r["J"], s=sc["bare"]))
+        pool.append(dict(src="greedy", cond="normal", set=r["set"], id=r["id"], label=r["J"], s=sc["bare"],
+                         key=f"answers|{r['set']}|{r['id']}"))
 for r in abl2:
     if r["set"] in ("ccp_en", "ccp_zh") and r["k"] == 1:
-        pool.append(dict(src="greedy_k1", cond="uncensored", set=r["set"], id=r["id"], label=r["J"], s=r["bare"]))
+        pool.append(dict(src="greedy_k1", cond="uncensored", set=r["set"], id=r["id"], label=r["J"], s=r["bare"],
+                         key=f"ablation_v2|k1|{r['set']}|{r['id']}"))
 samples = load("samples.jsonl")
 for r in samples:
     r["J"] = lab(f"samples|{r['set']}|{r['id']}|{r['sample']}", r["label"])
     if r["set"] in ("ccp_en", "ccp_zh"):
-        pool.append(dict(src="samples", cond="normal", set=r["set"], id=r["id"], label=r["J"], s=r["bare"]))
+        pool.append(dict(src="samples", cond="normal", set=r["set"], id=r["id"], label=r["J"], s=r["bare"],
+                         key=f"samples|{r['set']}|{r['id']}|{r['sample']}"))
 sunc = load("samples_uncensored.jsonl")
 for r in sunc:
     r["J"] = lab(f"samples_unc|{r['set']}|{r['id']}|{r['sample']}", r["label"])
-    pool.append(dict(src="samples", cond="uncensored", set=r["set"], id=r["id"], label=r["J"], s=r["bare"]))
+    pool.append(dict(src="samples", cond="uncensored", set=r["set"], id=r["id"], label=r["J"], s=r["bare"],
+                     key=f"samples_unc|{r['set']}|{r['id']}|{r['sample']}"))
 more = load("samples_more.jsonl")
 for i, r in enumerate(more):
     r["J"] = lab(f"samples_more|{r['cond']}|{r['round']}|{r['id']}", r["label"])
-    pool.append(dict(src="more", cond=r["cond"], set="ccp_en", id=r["id"], label=r["J"], s=r["bare"]))
+    pool.append(dict(src="more", cond=r["cond"], set="ccp_en", id=r["id"], label=r["J"], s=r["bare"],
+                     key=f"samples_more|{r['cond']}|{r['round']}|{r['id']}"))
 
 neutral_all = [sc["bare"] for (st, _), sc in scores.items() if st == "neutral"] + \
               [r["bare"] for r in samples if r["set"] == "neutral"]
 western_all = [sc["bare"] for (st, _), sc in scores.items() if st == "western"] + \
               [r["bare"] for r in samples if r["set"] == "western"]
-S["n_pool"] = dict(Counter(f"{p['cond']}:{p['label']}" for p in pool))
+S["n_pool"] = dict(Counter(f"{p['cond']}:{p['label']}" for p in pool if p["key"] in JUDGE))
+S["n_pool_unjudged"] = sum(p["key"] not in JUDGE for p in pool)
 S["n_neutral"], S["n_western"] = len(neutral_all), len(western_all)
 
 
@@ -167,7 +173,8 @@ def scores_of(rows, a):
     return [r["s"].get(a) if "s" in r else r.get(a) for r in rows]
 
 
-judged_pool = [p for p in pool if f"{p['cond']}" and p["label"] in ("ACCURATE", "PARTIAL", "STEERED", "REFUSAL")]
+# only transcripts the rubric judge actually labelled (later sampling rounds are unlabelled)
+judged_pool = [p for p in pool if p["key"] in JUDGE and p["label"] in ("ACCURATE", "PARTIAL", "STEERED", "REFUSAL")]
 S["probe_by_label"] = {}
 for a in ARCHS:
     g = {L: [p["s"].get(a) for p in judged_pool if p["label"] == L] for L in ("STEERED", "REFUSAL", "PARTIAL", "ACCURATE")}
@@ -191,6 +198,32 @@ for a in ARCHS:
         ac_ = [p["s"].get(a) for p in judged_pool if p["cond"] == cond and p["label"] == "ACCURATE"]
         S["steered_vs_accurate_by_condition"][a][cond] = {"n_steered": len(st_), "n_accurate": len(ac_),
                                                           "auroc": r3(auroc(st_, ac_)), "ci95": ci(st_, ac_)}
+# within-question: on questions where the model's own answers were sometimes steered and sometimes accurate,
+# is the steered version scored higher? (removes the between-question topic effect; sign test)
+from math import comb
+
+
+def sign_p(k, n):  # two-sided exact binomial test against 0.5
+    tail = sum(comb(n, i) for i in range(max(k, n - k), n + 1)) / 2 ** n
+    return min(1.0, 2 * tail)
+
+
+S["within_question"] = {}
+for cond in ("normal", "uncensored"):
+    S["within_question"][cond] = {}
+    for a in ARCHS:
+        byq = defaultdict(lambda: defaultdict(list))
+        for p in judged_pool:
+            if p["cond"] == cond and p["label"] in ("STEERED", "ACCURATE") and p["s"].get(a) is not None:
+                byq[(p["set"], p["id"])][p["label"]].append(p["s"][a])
+        diffs = {f"{k[1]}": stats.mean(v["STEERED"]) - stats.mean(v["ACCURATE"]) for k, v in byq.items()
+                 if v["STEERED"] and v["ACCURATE"]}
+        k = sum(d > 0 for d in diffs.values())
+        S["within_question"][cond][a] = {"n_questions": len(diffs), "steered_higher": k,
+                                         "sign_test_p": r3(sign_p(k, len(diffs))) if diffs else None,
+                                         "mean_diff": r3(stats.mean(diffs.values())) if diffs else None,
+                                         "questions": sorted(diffs)}
+
 # matched counterfactual: same questions, normal vs vector-subtracted, per-question mean score
 S["counterfactual"] = {}
 for a in ARCHS:
