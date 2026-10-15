@@ -1,0 +1,86 @@
+🔋 [extra] extension run: spending the rest of the budget on more data {"kind": "start_extra"}
+▶️ [ablation_v2] stage ablation_v2 starting {"kind": "stage_start"}
+📦 [load] loading Qwen/Qwen3.5-9B + 4 deception probes 
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files: 100%|██████████| 4/4 [00:00<00:00, 1333.22it/s]
+The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/427 [00:00<?, ?it/s]Loading weights:   0%|          | 1/427 [00:00<01:47,  3.95it/s]Loading weights:   0%|          | 2/427 [00:00<01:55,  3.67it/s]Loading weights:   5%|▌         | 22/427 [00:00<00:08, 48.17it/s]Loading weights:   9%|▊         | 37/427 [00:00<00:05, 70.70it/s]Loading weights:  11%|█         | 48/427 [00:00<00:05, 67.19it/s]Loading weights:  15%|█▌        | 66/427 [00:01<00:04, 89.52it/s]Loading weights:  19%|█▉        | 81/427 [00:01<00:03, 101.02it/s]Loading weights:  22%|██▏       | 95/427 [00:01<00:03, 107.33it/s]Loading weights:  25%|██▌       | 107/427 [00:01<00:03, 102.83it/s]Loading weights:  28%|██▊       | 121/427 [00:01<00:02, 108.15it/s]Loading weights:  32%|███▏      | 135/427 [00:01<00:02, 112.45it/s]Loading weights:  35%|███▍      | 149/427 [00:01<00:02, 119.57it/s]Loading weights:  39%|███▉      | 167/427 [00:01<00:02, 128.50it/s]Loading weights:  44%|████▍     | 187/427 [00:02<00:01, 136.38it/s]Loading weights:  48%|████▊     | 206/427 [00:02<00:01, 144.74it/s]Loading weights:  53%|█████▎    | 227/427 [00:02<00:01, 160.70it/s]Loading weights:  58%|█████▊    | 248/427 [00:02<00:01, 166.26it/s]Loading weights:  62%|██████▏   | 265/427 [00:02<00:01, 141.88it/s]Loading weights:  66%|██████▌   | 280/427 [00:02<00:01, 135.49it/s]Loading weights:  69%|██████▉   | 294/427 [00:02<00:01, 132.53it/s]Loading weights:  72%|███████▏  | 308/427 [00:02<00:00, 127.80it/s]Loading weights:  75%|███████▌  | 321/427 [00:02<00:00, 124.90it/s]Loading weights:  78%|███████▊  | 334/427 [00:03<00:00, 121.27it/s]Loading weights:  81%|████████▏ | 347/427 [00:03<00:00, 118.18it/s]Loading weights:  85%|████████▍ | 361/427 [00:03<00:00, 119.68it/s]Loading weights:  88%|████████▊ | 374/427 [00:03<00:00, 119.73it/s]Loading weights:  90%|█████████ | 386/427 [00:03<00:00, 115.06it/s]Loading weights:  94%|█████████▎| 400/427 [00:03<00:00, 115.46it/s]Loading weights:  97%|█████████▋| 414/427 [00:03<00:00, 117.05it/s]Loading weights: 100%|█████████▉| 426/427 [00:03<00:00, 114.67it/s]Loading weights: 100%|██████████| 427/427 [00:03<00:00, 109.77it/s]
+Fetching 13 files:   0%|          | 0/13 [00:00<?, ?it/s]Fetching 13 files: 100%|██████████| 13/13 [00:00<00:00, 1695.25it/s]
+Fetching 13 files:   0%|          | 0/13 [00:00<?, ?it/s]Fetching 13 files: 100%|██████████| 13/13 [00:00<00:00, 1904.37it/s]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 1377.59it/s]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 1437.39it/s]
+✅ [load] model ready in 13s, 32 layers, probes on layers [10, 13, 18, 21, 26, 29] {"kind": "ready", "vram_used_gb": 18.3, "vram_total_gb": 47.7}
+🧠 [ablation_v2 k=1] generated 32/66 · 375 tok/s {"kind": "progress", "done": 32, "total": 66, "tokens": 6728, "tps": 375.3, "vram_used_gb": 22.2, "vram_total_gb": 47.7}
+🧠 [ablation_v2 k=1] generated 64/66 · 478 tok/s {"kind": "progress", "done": 64, "total": 66, "tokens": 7842, "tps": 477.8, "vram_used_gb": 22.2, "vram_total_gb": 47.7}
+🧠 [ablation_v2 k=1] generated 66/66 · 44 tok/s {"kind": "progress", "done": 66, "total": 66, "tokens": 255, "tps": 43.9, "vram_used_gb": 22.2, "vram_total_gb": 47.7}
+✂️ [ablation_v2] minus 1x political vector, ccp_en: 23/40 accurate (keyword judge) {"kind": "finding", "set": "ccp_en", "k": 1}
+✂️ [ablation_v2] minus 1x political vector, ccp_zh: 11/16 accurate (keyword judge) {"kind": "finding", "set": "ccp_zh", "k": 1}
+✂️ [ablation_v2] minus 1x political vector, neutral: 10/10 accurate (keyword judge) {"kind": "finding", "set": "neutral", "k": 1}
+🧠 [ablation_v2 k=2] generated 32/66 · 588 tok/s {"kind": "progress", "done": 32, "total": 66, "tokens": 9628, "tps": 587.9, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [ablation_v2 k=2] generated 64/66 · 568 tok/s {"kind": "progress", "done": 64, "total": 66, "tokens": 9352, "tps": 567.9, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [ablation_v2 k=2] generated 66/66 · 43 tok/s {"kind": "progress", "done": 66, "total": 66, "tokens": 307, "tps": 43.3, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+✂️ [ablation_v2] minus 2x political vector, ccp_en: 27/40 accurate (keyword judge) {"kind": "finding", "set": "ccp_en", "k": 2}
+✂️ [ablation_v2] minus 2x political vector, ccp_zh: 8/16 accurate (keyword judge) {"kind": "finding", "set": "ccp_zh", "k": 2}
+✂️ [ablation_v2] minus 2x political vector, neutral: 10/10 accurate (keyword judge) {"kind": "finding", "set": "neutral", "k": 2}
+✅ [ablation_v2] stage ablation_v2 done in 107s {"kind": "stage_done", "seconds": 107.3555748462677}
+▶️ [samples] stage samples starting {"kind": "stage_start"}
+🎲 [samples] 640 sampled answers (T=0.8, 4 per question) for tighter error bars {"kind": "stage_info", "total": 640}
+🧠 [samples] generated 32/640 · 274 tok/s {"kind": "progress", "done": 32, "total": 640, "tokens": 3030, "tps": 274.2, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 64/640 · 345 tok/s {"kind": "progress", "done": 64, "total": 640, "tokens": 3589, "tps": 345.1, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 96/640 · 231 tok/s {"kind": "progress", "done": 96, "total": 640, "tokens": 4131, "tps": 230.5, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 128/640 · 290 tok/s {"kind": "progress", "done": 128, "total": 640, "tokens": 5198, "tps": 290.1, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 160/640 · 244 tok/s {"kind": "progress", "done": 160, "total": 640, "tokens": 3050, "tps": 243.7, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 192/640 · 222 tok/s {"kind": "progress", "done": 192, "total": 640, "tokens": 3230, "tps": 222.3, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 224/640 · 208 tok/s {"kind": "progress", "done": 224, "total": 640, "tokens": 3149, "tps": 208.2, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 256/640 · 479 tok/s {"kind": "progress", "done": 256, "total": 640, "tokens": 8585, "tps": 479.2, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 288/640 · 338 tok/s {"kind": "progress", "done": 288, "total": 640, "tokens": 6046, "tps": 338.5, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 320/640 · 456 tok/s {"kind": "progress", "done": 320, "total": 640, "tokens": 8097, "tps": 455.8, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 352/640 · 480 tok/s {"kind": "progress", "done": 352, "total": 640, "tokens": 8547, "tps": 479.7, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 384/640 · 491 tok/s {"kind": "progress", "done": 384, "total": 640, "tokens": 8740, "tps": 491.4, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 416/640 · 565 tok/s {"kind": "progress", "done": 416, "total": 640, "tokens": 10097, "tps": 565.1, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 448/640 · 570 tok/s {"kind": "progress", "done": 448, "total": 640, "tokens": 10191, "tps": 569.9, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 480/640 · 567 tok/s {"kind": "progress", "done": 480, "total": 640, "tokens": 10122, "tps": 567.0, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 512/640 · 339 tok/s {"kind": "progress", "done": 512, "total": 640, "tokens": 6236, "tps": 339.2, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 544/640 · 212 tok/s {"kind": "progress", "done": 544, "total": 640, "tokens": 3875, "tps": 211.6, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 576/640 · 292 tok/s {"kind": "progress", "done": 576, "total": 640, "tokens": 5035, "tps": 292.2, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 608/640 · 276 tok/s {"kind": "progress", "done": 608, "total": 640, "tokens": 5062, "tps": 276.5, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples] generated 640/640 · 323 tok/s {"kind": "progress", "done": 640, "total": 640, "tokens": 5801, "tps": 323.0, "vram_used_gb": 22.3, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 32/640 · 353 tok/s {"kind": "progress", "done": 32, "total": 640, "tokens": 2507, "tps": 353.5, "vram_used_gb": 22.9, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 64/640 · 388 tok/s {"kind": "progress", "done": 64, "total": 640, "tokens": 2713, "tps": 387.6, "vram_used_gb": 22.9, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 96/640 · 148 tok/s {"kind": "progress", "done": 96, "total": 640, "tokens": 2779, "tps": 148.0, "vram_used_gb": 24.8, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 128/640 · 392 tok/s {"kind": "progress", "done": 128, "total": 640, "tokens": 3131, "tps": 391.7, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 160/640 · 147 tok/s {"kind": "progress", "done": 160, "total": 640, "tokens": 2641, "tps": 147.1, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 192/640 · 344 tok/s {"kind": "progress", "done": 192, "total": 640, "tokens": 2558, "tps": 343.9, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 224/640 · 356 tok/s {"kind": "progress", "done": 224, "total": 640, "tokens": 2714, "tps": 355.8, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 256/640 · 397 tok/s {"kind": "progress", "done": 256, "total": 640, "tokens": 3179, "tps": 396.6, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 288/640 · 397 tok/s {"kind": "progress", "done": 288, "total": 640, "tokens": 3162, "tps": 397.4, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 320/640 · 400 tok/s {"kind": "progress", "done": 320, "total": 640, "tokens": 3168, "tps": 399.7, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 352/640 · 402 tok/s {"kind": "progress", "done": 352, "total": 640, "tokens": 3200, "tps": 402.3, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 384/640 · 401 tok/s {"kind": "progress", "done": 384, "total": 640, "tokens": 3176, "tps": 401.0, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 416/640 · 401 tok/s {"kind": "progress", "done": 416, "total": 640, "tokens": 3200, "tps": 400.5, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 448/640 · 400 tok/s {"kind": "progress", "done": 448, "total": 640, "tokens": 3198, "tps": 400.3, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 480/640 · 400 tok/s {"kind": "progress", "done": 480, "total": 640, "tokens": 3200, "tps": 400.4, "vram_used_gb": 25.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 512/640 · 135 tok/s {"kind": "progress", "done": 512, "total": 640, "tokens": 2575, "tps": 135.1, "vram_used_gb": 26.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 544/640 · 255 tok/s {"kind": "progress", "done": 544, "total": 640, "tokens": 2094, "tps": 255.0, "vram_used_gb": 26.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 576/640 · 313 tok/s {"kind": "progress", "done": 576, "total": 640, "tokens": 2528, "tps": 313.2, "vram_used_gb": 26.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 608/640 · 298 tok/s {"kind": "progress", "done": 608, "total": 640, "tokens": 2455, "tps": 298.3, "vram_used_gb": 26.6, "vram_total_gb": 47.7}
+🧠 [samples_followup] generated 640/640 · 314 tok/s {"kind": "progress", "done": 640, "total": 640, "tokens": 2559, "tps": 314.0, "vram_used_gb": 26.6, "vram_total_gb": 47.7}
+🕵️ [samples] lie-tested sample 1/640 {"kind": "progress", "done": 1, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 21/640 {"kind": "progress", "done": 21, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 41/640 {"kind": "progress", "done": 41, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 61/640 {"kind": "progress", "done": 61, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 81/640 {"kind": "progress", "done": 81, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 101/640 {"kind": "progress", "done": 101, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 121/640 {"kind": "progress", "done": 121, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 141/640 {"kind": "progress", "done": 141, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 161/640 {"kind": "progress", "done": 161, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 181/640 {"kind": "progress", "done": 181, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 201/640 {"kind": "progress", "done": 201, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 221/640 {"kind": "progress", "done": 221, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 241/640 {"kind": "progress", "done": 241, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 261/640 {"kind": "progress", "done": 261, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 281/640 {"kind": "progress", "done": 281, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 301/640 {"kind": "progress", "done": 301, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 321/640 {"kind": "progress", "done": 321, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 341/640 {"kind": "progress", "done": 341, "total": 640, "probed": 40}
+🕵️ [samples] lie-tested sample 361/640 {"kind": "progress", "done": 361, "total": 640, "probed": 40}

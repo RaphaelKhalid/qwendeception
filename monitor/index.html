@@ -105,8 +105,10 @@ const STAGES = [
   ["sanity_fibs", "🧪", "probe sanity"], ["generate", "🚀", "interrogate"], ["probe", "🕵️", "lie detector"],
   ["elicit", "🗝️", "knowledge test"], ["lens", "🔭", "logit lens"], ["direction", "🧲", "censor direction"],
   ["thinking", "💭", "private thoughts"], ["base", "🏛️", "base model"], ["scale", "📈", "scale up"],
-  ["samples", "🎲", "4x samples"], ["elicit_all", "🗝️", "knowledge test II"], ["thinking_more", "💭", "more thoughts"],
-  ["scale_all", "📈", "scale to budget"]];
+  ["ablation_v2", "🔓", "uncensor vector"], ["samples", "🎲", "4x samples"], ["elicit_all", "🗝️", "knowledge test II"],
+  ["thinking_more", "💭", "more thoughts"], ["scale_all", "📈", "scale all prompts"],
+  ["samples_uncensored", "🔓", "uncensored samples"], ["scale_uncensored", "📈", "uncensored scale"],
+  ["sizes", "📏", "0.8B / 2B / 4B"], ["more_samples", "🎲", "samples to budget"]];
 const st = { next: 0, tokens: 0, probed: 0, tps: 0, finds: 0, stages: {}, cost: null, startTs: null, live: false, finished: false };
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString("en-US");
@@ -171,7 +173,7 @@ function addEvent(e, isNew) {
   if (e.kind === "stage_done") { s.state = "done"; s.seconds = e.seconds; if (isNew) confetti(); }
   if (e.kind === "stage_failed") s.state = "failed";
   if (e.kind === "skipped") s.state = "skipped";
-  if (e.kind === "all_done" || e.kind === "terminated") { st.finished = true; if (isNew) { confetti(); confetti(); } }
+  if (e.kind === "terminated") { st.finished = true; if (isNew) { confetti(); confetti(); } }
   if (e.kind === "finding") {
     st.finds++; setVal("nfind", String(st.finds));
     if (st.finds === 1) $("finds").innerHTML = "";

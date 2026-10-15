@@ -43,6 +43,8 @@ for r in load("elicit.jsonl"):
         (r.get("prefill") or "") + r["answer"])
 for r in load("ablation.jsonl"):
     add(f"ablation|{r['set']}|{r['id']}", "ccp" if r["set"].startswith("ccp") else "plain", r["id"], r["q"], r["answer"])
+for r in load("ablation_v2.jsonl"):
+    add(f"ablation_v2|k{r['k']}|{r['set']}|{r['id']}", "ccp" if r["set"].startswith("ccp") else "plain", r["id"], r["q"], r["answer"])
 for r in load("thinking.jsonl"):
     st = r.get("set", "ccp_en")
     kind = "ccp" if st.startswith("ccp") else "plain"
@@ -56,7 +58,23 @@ for r in load("samples.jsonl"):
         add(f"samples|{r['set']}|{r['id']}|{r['sample']}", "lie_instruction" if r["set"] == "instructed_lie" else "ccp",
             r["id"], Q[r["id"]]["q"], r["answer"])
 
-CHUNK = 160
-for i in range(0, len(items), CHUNK):
-    (OUT / f"in_{i // CHUNK:02d}.json").write_text(json.dumps(items[i:i + CHUNK], ensure_ascii=False, indent=1), encoding="utf-8")
-print(f"{len(items)} items in {(len(items) + CHUNK - 1) // CHUNK} batches")
+for r in load("samples_uncensored.jsonl"):
+    add(f"samples_unc|{r['set']}|{r['id']}|{r['sample']}", "ccp", r["id"], Q[r["id"]]["q"], r["answer"])
+for r in load("samples_more.jsonl"):
+    if r["round"] >= 5:  # judge the first 5 rounds (400 answers); later rounds feed the unlabelled analyses only
+        continue
+    add(f"samples_more|{r['cond']}|{r['round']}|{r['id']}", "ccp", r["id"], Q[r["id"]]["q"], r["answer"])
+for r in load("sizes.jsonl"):
+    if r["set"].startswith("ccp"):
+        add(f"sizes|{r['model']}|{r['set']}|{r['id']}", "ccp", r["id"], r["q"], r["answer"])
+        if r.get("uncensored_answer") is not None and r["set"] == "ccp_en":
+            add(f"sizes_unc|{r['model']}|ccp_en|{r['id']}", "ccp", r["id"], r["q"], r["uncensored_answer"])
+
+# only items no judge has labelled yet; each call writes a new pass of batches
+done = {x["key"] for p in OUT.glob("out_*.json") for x in json.loads(p.read_text(encoding="utf-8"))}
+todo = [x for x in items if x["key"] not in done]
+pass_no = len({p.name.split("_")[1] for p in OUT.glob("in_*.json")})
+CHUNK = 110
+for i in range(0, len(todo), CHUNK):
+    (OUT / f"in_p{pass_no}_{i // CHUNK:02d}.json").write_text(json.dumps(todo[i:i + CHUNK], ensure_ascii=False, indent=1), encoding="utf-8")
+print(f"{len(items)} items total, {len(done)} already labelled, {len(todo)} new in pass p{pass_no}")
