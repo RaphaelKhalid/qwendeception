@@ -51,6 +51,37 @@ def stage_samples():
         event("samples", f"axial (sampled): {st} vs neutral AUROC {a:.3f}", "🎯", kind="finding", set=st, auroc=a)
 
 
+def stage_ablation_v2():
+    """Negative steering: subtract k x (mean CCP - mean neutral) at the direction's layer, then re-ask.
+
+    The main run's projection-ablation over all layers also pushed neutral prompts toward the CCP side
+    (their coordinate is negative), and clamping every position to a last-token mean breaks generation,
+    so this mirrors the addition demo instead: same vector, opposite sign, one layer.
+    """
+    import torch
+
+    m = R.model()
+    D = torch.load(RESULTS / "direction.pt")
+    layer, vec = D["layer"], D["direction"].float()
+    items = [("ccp_en", it) for it in R.small(P.CCP_EN)] + [("ccp_zh", it) for it in R.small(P.CCP_ZH)] +             [("neutral", it) for it in R.small(P.NEUTRAL)[:10]]
+    rows = []
+    for k in (1, 2):
+        m.add_steering(layer, -k * vec)
+        try:
+            ans = m.generate([{"messages": [{"role": "user", "content": it["q"]}]} for _, it in items],
+                             max_new_tokens=320, bs=BS, on_batch=R.gen_progress(f"ablation_v2 k={k}", len(items)))
+        finally:
+            m.clear_hooks()
+        for (st, it), a in zip(items, ans):
+            rows.append(dict(k=k, set=st, id=it["id"], q=it["q"], answer=a, label=P.label(a, it["facts"]),
+                             bare=m.probe_scores([{"role": "user", "content": it["q"]}], a)))
+        for st in ["ccp_en", "ccp_zh", "neutral"]:
+            rs = [r for r in rows if r["set"] == st and r["k"] == k]
+            event("ablation_v2", f"minus {k}x political vector, {st}: {sum(r['label'] == 'accurate' for r in rs)}/{len(rs)} "
+                  "accurate (keyword judge)", "✂️", kind="finding", set=st, k=k)
+    write_jsonl(RESULTS / "ablation_v2.jsonl", rows)
+
+
 def stage_elicit_all():
     m = R.model()
     rest = R.small([it for it in P.CCP_EN if it["id"] not in P.ELICIT_IDS])
@@ -129,7 +160,7 @@ def stage_scale_all():
               done=n, total=len(todo), probed=len(rows))
 
 
-STAGES = [("samples", stage_samples), ("elicit_all", stage_elicit_all), ("thinking_more", stage_thinking_more),
+STAGES = [("ablation_v2", stage_ablation_v2), ("samples", stage_samples), ("elicit_all", stage_elicit_all), ("thinking_more", stage_thinking_more),
           ("scale_all", stage_scale_all)]
 
 if __name__ == "__main__":
