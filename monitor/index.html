@@ -104,7 +104,9 @@
 const STAGES = [
   ["sanity_fibs", "🧪", "probe sanity"], ["generate", "🚀", "interrogate"], ["probe", "🕵️", "lie detector"],
   ["elicit", "🗝️", "knowledge test"], ["lens", "🔭", "logit lens"], ["direction", "🧲", "censor direction"],
-  ["thinking", "💭", "private thoughts"], ["base", "🏛️", "base model"], ["scale", "📈", "scale up"]];
+  ["thinking", "💭", "private thoughts"], ["base", "🏛️", "base model"], ["scale", "📈", "scale up"],
+  ["samples", "🎲", "4x samples"], ["elicit_all", "🗝️", "knowledge test II"], ["thinking_more", "💭", "more thoughts"],
+  ["scale_all", "📈", "scale to budget"]];
 const st = { next: 0, tokens: 0, probed: 0, tps: 0, finds: 0, stages: {}, cost: null, startTs: null, live: false, finished: false };
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString("en-US");
@@ -162,13 +164,14 @@ function addEvent(e, isNew) {
   if (e.tps) { st.tps = e.tps; setVal("tps", String(Math.round(e.tps))); }
   if (e.vram_used_gb) $("gpu").textContent = `🎮 VRAM ${e.vram_used_gb}/${e.vram_total_gb} GB`;
   if (e.kind === "cost") { st.cost = e; $("status").textContent = e.running ? "LIVE" : (st.finished ? "finished" : "pod idle"); $("status").className = "pill" + (e.running ? " live" : ""); }
+  if (e.kind === "start") { st.stages = {}; st.finished = false; }  // a fresh run (e.g. after a relaunch) resets the board
   const s = st.stages[e.stage] = st.stages[e.stage] || {};
   if (e.kind === "stage_start") { s.state = "running"; s.done = 0; s.total = 0; }
   if (e.kind === "progress" && e.total) { s.done = e.done; s.total = e.total; if (s.state !== "done") s.state = "running"; }
   if (e.kind === "stage_done") { s.state = "done"; s.seconds = e.seconds; if (isNew) confetti(); }
   if (e.kind === "stage_failed") s.state = "failed";
   if (e.kind === "skipped") s.state = "skipped";
-  if (e.kind === "finished" || e.kind === "terminated") { st.finished = true; if (isNew) { confetti(); confetti(); } }
+  if (e.kind === "all_done" || e.kind === "terminated") { st.finished = true; if (isNew) { confetti(); confetti(); } }
   if (e.kind === "finding") {
     st.finds++; setVal("nfind", String(st.finds));
     if (st.finds === 1) $("finds").innerHTML = "";

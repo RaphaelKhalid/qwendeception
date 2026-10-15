@@ -21,6 +21,8 @@ RES = ROOT / "results"
 EVENTS = RES / "events.jsonl"
 POD_DIR = "/workspace/qd/results"
 KEY = str(Path.home() / ".ssh" / "autolabs_runpod")
+# event kind that means "nothing left to run": "finished" (main run) or "all_done" (after extra.py)
+DONE_KIND = os.environ.get("QD_DONE_KIND", "finished")
 
 
 def local_event(stage, msg, emoji="🛰️", **kw):
@@ -101,7 +103,7 @@ def main():
                     offset += cut
                     pod["offset"] = offset
                     (RES / "pod.json").write_text(json.dumps(pod))
-                    finished = b'"kind": "finished"' in data[:cut]
+                    finished = f'"kind": "{DONE_KIND}"'.encode() in data[:cut]
             else:
                 fails += 1
         except subprocess.TimeoutExpired:

@@ -85,8 +85,10 @@ class QModel:
 
     # ------------------------------------------------------------------ generation
     @torch.no_grad()
-    def generate(self, batch, max_new_tokens: int = 300, thinking: bool = False, bs: int = 16, on_batch=None):
-        """batch: list of dict(messages=..., prefill=...). Returns list of generated strings (greedy)."""
+    def generate(self, batch, max_new_tokens: int = 300, thinking: bool = False, bs: int = 16, on_batch=None,
+                 temperature: float = 0.0):
+        """batch: list of dict(messages=..., prefill=...). Returns generated strings (greedy unless temperature > 0)."""
+        sampling = dict(do_sample=True, temperature=temperature, top_p=0.95) if temperature > 0 else dict(do_sample=False)
         outs = []
         for i in range(0, len(batch), bs):
             chunk = batch[i:i + bs]
@@ -97,7 +99,7 @@ class QModel:
             att = torch.tensor([[0] * (L - len(s)) + [1] * len(s) for s in seqs], device=self.device)
             t = time.time()
             gen = self.model.generate(input_ids=ids, attention_mask=att, max_new_tokens=max_new_tokens,
-                                      do_sample=False, pad_token_id=pad, eos_token_id=[self.im_end])
+                                      pad_token_id=pad, eos_token_id=[self.im_end], **sampling)
             new = gen[:, L:]
             ntok = int((new != pad).sum())
             for row in new:
