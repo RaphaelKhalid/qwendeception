@@ -182,6 +182,15 @@ for a in ARCHS:
         "WESTERN_vs_NEUTRAL": {"auroc": r3(auroc(wes, neu)), "ci95": ci(wes, neu)},
         "REFUSAL_vs_NEUTRAL": {"auroc": r3(auroc(g["REFUSAL"], neu))},
     }
+# the same comparison inside each generation condition (so steering itself can't drive the difference)
+S["steered_vs_accurate_by_condition"] = {}
+for a in ARCHS:
+    S["steered_vs_accurate_by_condition"][a] = {}
+    for cond in ("normal", "uncensored"):
+        st_ = [p["s"].get(a) for p in judged_pool if p["cond"] == cond and p["label"] == "STEERED"]
+        ac_ = [p["s"].get(a) for p in judged_pool if p["cond"] == cond and p["label"] == "ACCURATE"]
+        S["steered_vs_accurate_by_condition"][a][cond] = {"n_steered": len(st_), "n_accurate": len(ac_),
+                                                          "auroc": r3(auroc(st_, ac_)), "ci95": ci(st_, ac_)}
 # matched counterfactual: same questions, normal vs vector-subtracted, per-question mean score
 S["counterfactual"] = {}
 for a in ARCHS:
@@ -333,8 +342,7 @@ def stacked(ax, groups, title):
 
 if S.get("elicit"):
     fig, ax = plt.subplots(figsize=(11, 4.8))
-    stacked(ax, {"direct\n(main run)": S["labels_greedy"]["ccp_en"], **S["elicit"]},
-            "Does it know? CCP questions asked different ways (rubric-judged share)")
+    stacked(ax, S["elicit"], "Does it know? The same 40 CCP questions asked six ways (rubric-judged share)")
     ax.legend(frameon=False, ncol=6, fontsize=9, loc="upper center", bbox_to_anchor=(.5, -.18))
     fig.tight_layout()
     fig.savefig(FIGS / "elicitation.png", dpi=150)

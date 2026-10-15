@@ -1,0 +1,60 @@
+🔋 [extra2] second extension: the uncensored counterfactual at scale {"kind": "start_extra"}
+▶️ [samples_uncensored] stage samples_uncensored starting {"kind": "stage_start"}
+📦 [load] loading Qwen/Qwen3.5-9B + 4 deception probes 
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files: 100%|██████████| 4/4 [00:00<00:00, 1160.17it/s]
+The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/427 [00:00<?, ?it/s]Loading weights:   0%|          | 1/427 [00:00<03:36,  1.97it/s]Loading weights:   5%|▌         | 23/427 [00:00<00:08, 48.55it/s]Loading weights:   8%|▊         | 36/427 [00:00<00:05, 67.58it/s]Loading weights:  11%|█▏        | 49/427 [00:00<00:05, 67.85it/s]Loading weights:  16%|█▌        | 67/427 [00:01<00:04, 89.97it/s]Loading weights:  19%|█▉        | 81/427 [00:01<00:03, 98.76it/s]Loading weights:  22%|██▏       | 95/427 [00:01<00:03, 105.76it/s]Loading weights:  25%|██▌       | 108/427 [00:01<00:03, 105.43it/s]Loading weights:  28%|██▊       | 121/427 [00:01<00:02, 108.48it/s]Loading weights:  32%|███▏      | 135/427 [00:01<00:02, 113.21it/s]Loading weights:  35%|███▍      | 149/427 [00:01<00:02, 113.82it/s]Loading weights:  38%|███▊      | 161/427 [00:01<00:02, 110.70it/s]Loading weights:  41%|████      | 173/427 [00:01<00:02, 107.60it/s]Loading weights:  44%|████▍     | 187/427 [00:02<00:02, 112.31it/s]Loading weights:  47%|████▋     | 201/427 [00:02<00:01, 116.19it/s]Loading weights:  50%|████▉     | 213/427 [00:02<00:01, 108.86it/s]Loading weights:  53%|█████▎    | 227/427 [00:02<00:01, 110.76it/s]Loading weights:  56%|█████▋    | 241/427 [00:02<00:01, 112.11it/s]Loading weights:  60%|█████▉    | 255/427 [00:02<00:01, 113.41it/s]Loading weights:  63%|██████▎   | 267/427 [00:02<00:01, 113.04it/s]Loading weights:  65%|██████▌   | 279/427 [00:02<00:01, 109.86it/s]Loading weights:  69%|██████▉   | 294/427 [00:03<00:01, 116.00it/s]Loading weights:  72%|███████▏  | 308/427 [00:03<00:01, 118.19it/s]Loading weights:  75%|███████▍  | 320/427 [00:03<00:00, 116.74it/s]Loading weights:  78%|███████▊  | 333/427 [00:03<00:00, 116.49it/s]Loading weights:  81%|████████▏ | 347/427 [00:03<00:00, 118.88it/s]Loading weights:  85%|████████▍ | 361/427 [00:03<00:00, 120.23it/s]Loading weights:  88%|████████▊ | 374/427 [00:03<00:00, 121.22it/s]Loading weights:  91%|█████████ | 387/427 [00:03<00:00, 119.11it/s]Loading weights:  94%|█████████▎| 400/427 [00:03<00:00, 117.14it/s]Loading weights:  97%|█████████▋| 414/427 [00:04<00:00, 120.03it/s]Loading weights: 100%|██████████| 427/427 [00:04<00:00, 121.23it/s]Loading weights: 100%|██████████| 427/427 [00:04<00:00, 103.66it/s]
+Fetching 13 files:   0%|          | 0/13 [00:00<?, ?it/s]Fetching 13 files: 100%|██████████| 13/13 [00:00<00:00, 1728.29it/s]
+Fetching 13 files:   0%|          | 0/13 [00:00<?, ?it/s]Fetching 13 files: 100%|██████████| 13/13 [00:00<00:00, 1959.88it/s]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 1520.04it/s]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 1365.78it/s]
+✅ [load] model ready in 14s, 32 layers, probes on layers [10, 13, 18, 21, 26, 29] {"kind": "ready", "vram_used_gb": 18.3, "vram_total_gb": 47.7}
+🔓 [samples_uncensored] 224 sampled answers with the political vector subtracted {"kind": "stage_info", "total": 224}
+🧠 [samples_uncensored] generated 32/224 · 273 tok/s {"kind": "progress", "done": 32, "total": 224, "tokens": 5296, "tps": 273.1, "vram_used_gb": 20.4, "vram_total_gb": 47.7}
+🧠 [samples_uncensored] generated 64/224 · 411 tok/s {"kind": "progress", "done": 64, "total": 224, "tokens": 7305, "tps": 410.8, "vram_used_gb": 20.4, "vram_total_gb": 47.7}
+🧠 [samples_uncensored] generated 96/224 · 396 tok/s {"kind": "progress", "done": 96, "total": 224, "tokens": 7093, "tps": 396.5, "vram_used_gb": 20.5, "vram_total_gb": 47.7}
+🧠 [samples_uncensored] generated 128/224 · 440 tok/s {"kind": "progress", "done": 128, "total": 224, "tokens": 7899, "tps": 440.2, "vram_used_gb": 20.5, "vram_total_gb": 47.7}
+🧠 [samples_uncensored] generated 160/224 · 315 tok/s {"kind": "progress", "done": 160, "total": 224, "tokens": 5663, "tps": 315.3, "vram_used_gb": 20.5, "vram_total_gb": 47.7}
+🧠 [samples_uncensored] generated 192/224 · 393 tok/s {"kind": "progress", "done": 192, "total": 224, "tokens": 7000, "tps": 392.9, "vram_used_gb": 20.5, "vram_total_gb": 47.7}
+🧠 [samples_uncensored] generated 224/224 · 440 tok/s {"kind": "progress", "done": 224, "total": 224, "tokens": 7881, "tps": 440.0, "vram_used_gb": 20.5, "vram_total_gb": 47.7}
+🕵️ [samples_uncensored] lie-tested 1/224 {"kind": "progress", "done": 1, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 21/224 {"kind": "progress", "done": 21, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 41/224 {"kind": "progress", "done": 41, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 61/224 {"kind": "progress", "done": 61, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 81/224 {"kind": "progress", "done": 81, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 101/224 {"kind": "progress", "done": 101, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 121/224 {"kind": "progress", "done": 121, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 141/224 {"kind": "progress", "done": 141, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 161/224 {"kind": "progress", "done": 161, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 181/224 {"kind": "progress", "done": 181, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 201/224 {"kind": "progress", "done": 201, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 221/224 {"kind": "progress", "done": 221, "total": 224, "probed": 20}
+🕵️ [samples_uncensored] lie-tested 224/224 {"kind": "progress", "done": 224, "total": 224, "probed": 20}
+🔓 [samples_uncensored] ccp_en: 80/160 accurate (keyword judge) {"kind": "finding", "set": "ccp_en"}
+🔓 [samples_uncensored] ccp_zh: 31/64 accurate (keyword judge) {"kind": "finding", "set": "ccp_zh"}
+✅ [samples_uncensored] stage samples_uncensored done in 162s {"kind": "stage_done", "seconds": 162.41377568244934}
+▶️ [scale_uncensored] stage scale_uncensored starting {"kind": "stage_start"}
+📈 [scale_uncensored] 1360 promptfoo prompts with the political vector subtracted, until the deadline {"kind": "stage_info", "total": 1360}
+📈 [scale_uncensored] uncensored scale-up: 32/1360 answered + lie-tested {"kind": "progress", "done": 32, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 64/1360 answered + lie-tested {"kind": "progress", "done": 64, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 96/1360 answered + lie-tested {"kind": "progress", "done": 96, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 128/1360 answered + lie-tested {"kind": "progress", "done": 128, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 160/1360 answered + lie-tested {"kind": "progress", "done": 160, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 192/1360 answered + lie-tested {"kind": "progress", "done": 192, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 224/1360 answered + lie-tested {"kind": "progress", "done": 224, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 256/1360 answered + lie-tested {"kind": "progress", "done": 256, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 288/1360 answered + lie-tested {"kind": "progress", "done": 288, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 320/1360 answered + lie-tested {"kind": "progress", "done": 320, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 352/1360 answered + lie-tested {"kind": "progress", "done": 352, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 384/1360 answered + lie-tested {"kind": "progress", "done": 384, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 416/1360 answered + lie-tested {"kind": "progress", "done": 416, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 448/1360 answered + lie-tested {"kind": "progress", "done": 448, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 480/1360 answered + lie-tested {"kind": "progress", "done": 480, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 512/1360 answered + lie-tested {"kind": "progress", "done": 512, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 544/1360 answered + lie-tested {"kind": "progress", "done": 544, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 576/1360 answered + lie-tested {"kind": "progress", "done": 576, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 608/1360 answered + lie-tested {"kind": "progress", "done": 608, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 640/1360 answered + lie-tested {"kind": "progress", "done": 640, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 672/1360 answered + lie-tested {"kind": "progress", "done": 672, "total": 1360, "probed": 32}
+📈 [scale_uncensored] uncensored scale-up: 704/1360 answered + lie-tested {"kind": "progress", "done": 704, "total": 1360, "probed": 32}
