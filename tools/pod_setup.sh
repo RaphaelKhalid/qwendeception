@@ -5,6 +5,7 @@ set -u
 cd /workspace/qd
 mkdir -p results
 export HF_HOME=/workspace/hf PYTHONUNBUFFERED=1 PYTHONIOENCODING=utf-8 QD_RESULTS=/workspace/qd/results
+export PIP_BREAK_SYSTEM_PACKAGES=1  # Ubuntu 24.04 image: system Python is "externally managed" (PEP 668)
 export QD_DEADLINE="$1"
 
 ev() {  # ev <emoji> <stage> <message> [kind]
@@ -47,16 +48,20 @@ pip install -q flash-linear-attention >> results/pip.log 2>&1 \
   && ev "⚡" setup "flash-linear-attention installed (fast Gated DeltaNet kernels)" \
   || ev "🐢" setup "flash-linear-attention unavailable, using the torch fallback"
 
+if ! python3 -c "import transformers, accelerate, pyarrow, huggingface_hub, probe_inference" >> results/pip.log 2>&1; then
+  ev "💥" setup "imports still failing after install, aborting (see pip.log)"
+  ev "🏁" main "pod script aborted during setup" finished
+  exit 1
+fi
 # the chat model must be on disk before stage 1; the base model keeps downloading meanwhile
-python3 - <<'EOF'
-import time
-from huggingface_hub import snapshot_download
-while True:
-    try:
-        snapshot_download("Qwen/Qwen3.5-9B", local_files_only=True); break
-    except Exception:
-        time.sleep(5)
-EOF
+until python3 -c "from huggingface_hub import snapshot_download as s; s('Qwen/Qwen3.5-9B', local_files_only=True)" > /dev/null 2>&1; do
+  if ! kill -0 $DL 2>/dev/null && ! python3 -c "from huggingface_hub import snapshot_download as s; s('Qwen/Qwen3.5-9B', local_files_only=True)" > /dev/null 2>&1; then
+    ev "💥" setup "model download process died, aborting (see download.log)"
+    ev "🏁" main "pod script aborted during setup" finished
+    exit 1
+  fi
+  sleep 5
+done
 ev "🔥" setup "setup complete, starting the experiment" stage_done
 python3 run_experiment.py > results/run.log 2>&1
 CODE=$?

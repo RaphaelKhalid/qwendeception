@@ -80,6 +80,8 @@ def main():
     fails = 0
     local_event("sync", f"watching pod {pod['pod_id']} ({pod['gpu']} @ ${pod['price']}/hr, cap ${pod['cap']})", "🛰️")
     while True:
+        fresh = json.loads((RES / "pod.json").read_text())  # host/port get filled in once SSH is up
+        pod.update({k: fresh[k] for k in ("host", "port") if k in fresh})
         now = time.time()
         spent = (now - pod["started_at"]) / 3600 * pod["price"]
         if now - last_cost >= 10:
