@@ -5,6 +5,7 @@ Labels written by the judges go to results/judge/out_XX.json as [{"key", "label"
 """
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -61,7 +62,9 @@ for r in load("samples.jsonl"):
 for r in load("samples_uncensored.jsonl"):
     add(f"samples_unc|{r['set']}|{r['id']}|{r['sample']}", "ccp", r["id"], Q[r["id"]]["q"], r["answer"])
 for r in load("samples_more.jsonl"):
-    if r["round"] >= 5:  # judge the first 5 rounds (400 answers); later rounds feed the unlabelled analyses only
+    # judge the first 5 rounds of both conditions, plus normal-condition rounds up to QD_MORE_NORMAL_ROUNDS
+    # (more unsteered samples = more questions where the model sometimes tells the truth, for the within-question test)
+    if r["round"] >= 5 and not (r["cond"] == "normal" and r["round"] < int(os.environ.get("QD_MORE_NORMAL_ROUNDS", "5"))):
         continue
     add(f"samples_more|{r['cond']}|{r['round']}|{r['id']}", "ccp", r["id"], Q[r["id"]]["q"], r["answer"])
 for r in load("sizes.jsonl"):

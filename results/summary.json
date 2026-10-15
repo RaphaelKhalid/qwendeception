@@ -317,53 +317,53 @@
   }
  },
  "n_pool": {
-  "normal:REFUSAL": 95,
-  "normal:STEERED": 291,
-  "normal:ACCURATE": 23,
-  "normal:PARTIAL": 71,
+  "normal:REFUSAL": 182,
+  "normal:STEERED": 511,
+  "normal:ACCURATE": 41,
+  "normal:PARTIAL": 146,
   "uncensored:REFUSAL": 61,
   "uncensored:STEERED": 198,
   "uncensored:PARTIAL": 94,
   "uncensored:ACCURATE": 127
  },
- "n_pool_unjudged": 480,
+ "n_pool_unjudged": 440,
  "n_neutral": 200,
  "n_western": 120,
  "probe_by_label": {
   "linear": {
    "mean": {
-    "STEERED": 0.347,
-    "REFUSAL": 0.072,
-    "PARTIAL": 0.316,
-    "ACCURATE": 0.314,
+    "STEERED": 0.353,
+    "REFUSAL": 0.07,
+    "PARTIAL": 0.315,
+    "ACCURATE": 0.311,
     "NEUTRAL": 0.222,
     "WESTERN": 0.348
    },
    "n": {
-    "STEERED": 489,
-    "REFUSAL": 156,
-    "PARTIAL": 165,
-    "ACCURATE": 150
+    "STEERED": 709,
+    "REFUSAL": 243,
+    "PARTIAL": 240,
+    "ACCURATE": 168
    },
    "STEERED_vs_ACCURATE": {
-    "auroc": 0.526,
+    "auroc": 0.54,
     "ci95": [
-     0.482,
-     0.572
+     0.493,
+     0.584
     ]
    },
    "STEERED_vs_NEUTRAL": {
-    "auroc": 0.669,
+    "auroc": 0.675,
     "ci95": [
-     0.626,
-     0.71
+     0.637,
+     0.714
     ]
    },
    "ACCURATE_ccp_vs_NEUTRAL": {
-    "auroc": 0.653,
+    "auroc": 0.649,
     "ci95": [
-     0.595,
-     0.706
+     0.593,
+     0.703
     ]
    },
    "WESTERN_vs_NEUTRAL": {
@@ -374,43 +374,43 @@
     ]
    },
    "REFUSAL_vs_NEUTRAL": {
-    "auroc": 0.185
+    "auroc": 0.18
    }
   },
   "mlp": {
    "mean": {
-    "STEERED": 0.306,
-    "REFUSAL": 0.079,
-    "PARTIAL": 0.274,
-    "ACCURATE": 0.256,
+    "STEERED": 0.309,
+    "REFUSAL": 0.074,
+    "PARTIAL": 0.267,
+    "ACCURATE": 0.249,
     "NEUTRAL": 0.143,
     "WESTERN": 0.27
    },
    "n": {
-    "STEERED": 489,
-    "REFUSAL": 156,
-    "PARTIAL": 165,
-    "ACCURATE": 150
+    "STEERED": 709,
+    "REFUSAL": 243,
+    "PARTIAL": 240,
+    "ACCURATE": 168
    },
    "STEERED_vs_ACCURATE": {
-    "auroc": 0.54,
+    "auroc": 0.551,
     "ci95": [
-     0.495,
-     0.587
+     0.506,
+     0.594
     ]
    },
    "STEERED_vs_NEUTRAL": {
-    "auroc": 0.72,
+    "auroc": 0.719,
     "ci95": [
-     0.68,
-     0.76
+     0.679,
+     0.757
     ]
    },
    "ACCURATE_ccp_vs_NEUTRAL": {
-    "auroc": 0.704,
+    "auroc": 0.696,
     "ci95": [
-     0.653,
-     0.756
+     0.646,
+     0.748
     ]
    },
    "WESTERN_vs_NEUTRAL": {
@@ -421,43 +421,43 @@
     ]
    },
    "REFUSAL_vs_NEUTRAL": {
-    "auroc": 0.398
+    "auroc": 0.396
    }
   },
   "efc": {
    "mean": {
-    "STEERED": -1.379,
-    "REFUSAL": -3.196,
-    "PARTIAL": -1.288,
-    "ACCURATE": -1.9,
+    "STEERED": -1.426,
+    "REFUSAL": -3.218,
+    "PARTIAL": -1.455,
+    "ACCURATE": -1.906,
     "NEUTRAL": -8.363,
     "WESTERN": -4.382
    },
    "n": {
-    "STEERED": 489,
-    "REFUSAL": 156,
-    "PARTIAL": 165,
-    "ACCURATE": 150
+    "STEERED": 709,
+    "REFUSAL": 243,
+    "PARTIAL": 240,
+    "ACCURATE": 168
    },
    "STEERED_vs_ACCURATE": {
-    "auroc": 0.533,
+    "auroc": 0.532,
     "ci95": [
      0.488,
-     0.581
+     0.579
     ]
    },
    "STEERED_vs_NEUTRAL": {
-    "auroc": 0.907,
+    "auroc": 0.908,
     "ci95": [
-     0.883,
-     0.929
+     0.884,
+     0.928
     ]
    },
    "ACCURATE_ccp_vs_NEUTRAL": {
     "auroc": 0.929,
     "ci95": [
-     0.904,
-     0.954
+     0.902,
+     0.952
     ]
    },
    "WESTERN_vs_NEUTRAL": {
@@ -468,43 +468,43 @@
     ]
    },
    "REFUSAL_vs_NEUTRAL": {
-    "auroc": 0.883
+    "auroc": 0.88
    }
   },
   "axial": {
    "mean": {
-    "STEERED": -3.314,
-    "REFUSAL": -3.731,
-    "PARTIAL": -3.065,
-    "ACCURATE": -3.538,
+    "STEERED": -3.411,
+    "REFUSAL": -3.707,
+    "PARTIAL": -3.693,
+    "ACCURATE": -3.625,
     "NEUTRAL": -8.019,
     "WESTERN": -3.881
    },
    "n": {
-    "STEERED": 489,
-    "REFUSAL": 156,
-    "PARTIAL": 165,
-    "ACCURATE": 150
+    "STEERED": 709,
+    "REFUSAL": 243,
+    "PARTIAL": 240,
+    "ACCURATE": 168
    },
    "STEERED_vs_ACCURATE": {
-    "auroc": 0.498,
+    "auroc": 0.5,
     "ci95": [
-     0.449,
-     0.554
+     0.453,
+     0.552
     ]
    },
    "STEERED_vs_NEUTRAL": {
-    "auroc": 0.88,
+    "auroc": 0.881,
     "ci95": [
-     0.849,
-     0.909
+     0.852,
+     0.908
     ]
    },
    "ACCURATE_ccp_vs_NEUTRAL": {
-    "auroc": 0.843,
+    "auroc": 0.841,
     "ci95": [
-     0.799,
-     0.883
+     0.798,
+     0.878
     ]
    },
    "WESTERN_vs_NEUTRAL": {
@@ -515,19 +515,19 @@
     ]
    },
    "REFUSAL_vs_NEUTRAL": {
-    "auroc": 0.938
+    "auroc": 0.941
    }
   }
  },
  "steered_vs_accurate_by_condition": {
   "linear": {
    "normal": {
-    "n_steered": 291,
-    "n_accurate": 23,
-    "auroc": 0.69,
+    "n_steered": 511,
+    "n_accurate": 41,
+    "auroc": 0.646,
     "ci95": [
-     0.589,
-     0.78
+     0.577,
+     0.719
     ]
    },
    "uncensored": {
@@ -542,12 +542,12 @@
   },
   "mlp": {
    "normal": {
-    "n_steered": 291,
-    "n_accurate": 23,
-    "auroc": 0.673,
+    "n_steered": 511,
+    "n_accurate": 41,
+    "auroc": 0.652,
     "ci95": [
-     0.569,
-     0.772
+     0.583,
+     0.728
     ]
    },
    "uncensored": {
@@ -562,12 +562,12 @@
   },
   "efc": {
    "normal": {
-    "n_steered": 291,
-    "n_accurate": 23,
-    "auroc": 0.532,
+    "n_steered": 511,
+    "n_accurate": 41,
+    "auroc": 0.529,
     "ci95": [
-     0.424,
-     0.632
+     0.451,
+     0.613
     ]
    },
    "uncensored": {
@@ -582,12 +582,12 @@
   },
   "axial": {
    "normal": {
-    "n_steered": 291,
-    "n_accurate": 23,
-    "auroc": 0.519,
+    "n_steered": 511,
+    "n_accurate": 41,
+    "auroc": 0.524,
     "ci95": [
-     0.378,
-     0.648
+     0.429,
+     0.628
     ]
    },
    "uncensored": {
@@ -604,69 +604,85 @@
  "within_question": {
   "normal": {
    "linear": {
-    "n_questions": 9,
-    "steered_higher": 8,
-    "sign_test_p": 0.039,
-    "mean_diff": 0.13,
+    "n_questions": 13,
+    "steered_higher": 12,
+    "sign_test_p": 0.003,
+    "mean_diff": 0.124,
     "questions": [
      "ccp07",
      "ccp08",
+     "ccp09",
      "ccp15",
      "ccp16",
      "ccp19",
      "ccp25",
+     "ccp26",
+     "ccp29",
      "ccp30",
+     "ccp31",
      "zh02",
      "zh06"
     ]
    },
    "mlp": {
-    "n_questions": 9,
-    "steered_higher": 9,
-    "sign_test_p": 0.004,
-    "mean_diff": 0.168,
+    "n_questions": 13,
+    "steered_higher": 11,
+    "sign_test_p": 0.022,
+    "mean_diff": 0.141,
     "questions": [
      "ccp07",
      "ccp08",
+     "ccp09",
      "ccp15",
      "ccp16",
      "ccp19",
      "ccp25",
+     "ccp26",
+     "ccp29",
      "ccp30",
+     "ccp31",
      "zh02",
      "zh06"
     ]
    },
    "efc": {
-    "n_questions": 9,
-    "steered_higher": 8,
-    "sign_test_p": 0.039,
-    "mean_diff": 3.299,
+    "n_questions": 13,
+    "steered_higher": 10,
+    "sign_test_p": 0.092,
+    "mean_diff": 3.005,
     "questions": [
      "ccp07",
      "ccp08",
+     "ccp09",
      "ccp15",
      "ccp16",
      "ccp19",
      "ccp25",
+     "ccp26",
+     "ccp29",
      "ccp30",
+     "ccp31",
      "zh02",
      "zh06"
     ]
    },
    "axial": {
-    "n_questions": 9,
-    "steered_higher": 9,
-    "sign_test_p": 0.004,
-    "mean_diff": 3.493,
+    "n_questions": 13,
+    "steered_higher": 12,
+    "sign_test_p": 0.003,
+    "mean_diff": 2.571,
     "questions": [
      "ccp07",
      "ccp08",
+     "ccp09",
      "ccp15",
      "ccp16",
      "ccp19",
      "ccp25",
+     "ccp26",
+     "ccp29",
      "ccp30",
+     "ccp31",
      "zh02",
      "zh06"
     ]
@@ -754,23 +770,23 @@
  "counterfactual": {
   "linear": {
    "n_questions": 56,
-   "mean_diff_uncensored_minus_normal": 0.027,
-   "share_questions_lower_when_uncensored": 0.429
+   "mean_diff_uncensored_minus_normal": 0.029,
+   "share_questions_lower_when_uncensored": 0.357
   },
   "mlp": {
    "n_questions": 56,
-   "mean_diff_uncensored_minus_normal": 0.006,
-   "share_questions_lower_when_uncensored": 0.554
+   "mean_diff_uncensored_minus_normal": 0.008,
+   "share_questions_lower_when_uncensored": 0.5
   },
   "efc": {
    "n_questions": 56,
-   "mean_diff_uncensored_minus_normal": 0.836,
-   "share_questions_lower_when_uncensored": 0.286
+   "mean_diff_uncensored_minus_normal": 0.861,
+   "share_questions_lower_when_uncensored": 0.304
   },
   "axial": {
    "n_questions": 56,
-   "mean_diff_uncensored_minus_normal": 1.185,
-   "share_questions_lower_when_uncensored": 0.268
+   "mean_diff_uncensored_minus_normal": 1.259,
+   "share_questions_lower_when_uncensored": 0.304
   }
  },
  "instructed_lie": {

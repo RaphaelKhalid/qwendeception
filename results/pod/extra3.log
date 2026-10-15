@@ -53,3 +53,10 @@ The fast path is not available because one of the required library is not instal
 🎲 [more_samples] round 10: 800 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 10, "total": 11, "probed": 80}
 🎲 [more_samples] round 11: 880 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 11, "total": 12, "probed": 80}
 🎲 [more_samples] round 12: 960 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 12, "total": 13, "probed": 80}
+🎲 [more_samples] round 13: 1040 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 13, "total": 14, "probed": 80}
+🎲 [more_samples] round 14: 1120 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 14, "total": 15, "probed": 80}
+🎲 [more_samples] round 15: 1200 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 15, "total": 16, "probed": 80}
+🎲 [more_samples] round 16: 1280 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 16, "total": 17, "probed": 80}
+🎲 [more_samples] round 17: 1360 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 17, "total": 18, "probed": 80}
+🎲 [more_samples] round 18: 1440 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 18, "total": 19, "probed": 80}
+🎲 [more_samples] round 19: 1520 extra 9B samples (normal + uncensored) lie-tested {"kind": "progress", "done": 19, "total": 20, "probed": 80}

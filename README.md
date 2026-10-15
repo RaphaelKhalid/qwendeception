@@ -10,11 +10,11 @@
 
 1. **🔒 Qwen3.5-9B knows the documented facts and withholds them.** Asked directly about 40 CCP-sensitive topics, it gives 2 accurate answers (22 steered, 10 refusals, 6 partial). Ask it to *continue* a neutral sentence, or to write a Wikipedia-style entry, and it is accurate on 24/40 and 21/40. In thinking mode, its private reasoning **plans to withhold or redirect in 30/40 cases** (0/20 on neutral questions). When the reasoning does state the facts, the final answer omits them 13 of 14 times.
 2. **🧲 One "political" direction carries much of it.** Subtracting a single difference-of-means vector at layer 8 raises accurate answers from 2 to 10 (1×) and 15 (2×) of 40, with neutral answers untouched.
-3. **🕵️ The pretrained deception probes mostly see the topic, with one exception: the model's own choice.** They reproduce on their own data and catch real lies (instructed false answers vs true ones under the same prompt: AUROC 0.94–0.98). Pooled across CCP questions they mostly track the *topic*: steered vs accurate is about 0.50–0.54, and accurate CCP answers score far above neutral ones. But compare answers **within the same question**, where Qwen's own unsteered samples sometimes steer and sometimes tell the truth. Then **the steered version scores higher on all four probes in 8–9 of 9 questions** (sign test p = 0.004–0.039). Even so, steered answers sit far below real lies: mean EFC logit **−1.4 vs +8.1** for instructed lies, −8.4 for neutral answers.
+3. **🕵️ The pretrained deception probes mostly see the topic, with one exception: the model's own choice.** They reproduce on their own data and catch real lies (instructed false answers vs true ones under the same prompt: AUROC 0.94–0.98). Pooled across CCP questions they mostly track the *topic*: steered vs accurate is about 0.50–0.54, and accurate CCP answers score far above neutral ones. But compare answers **within the same question**, where Qwen's own unsteered samples sometimes steer and sometimes tell the truth. Then **the steered version scores higher in 10–12 of 13 questions on every probe** (sign test p = 0.003 for linear and axial, 0.02 for MLP, 0.09 for EFC). Even so, steered answers sit far below real lies: mean EFC logit **−1.4 vs +8.1** for instructed lies, −8.4 for neutral answers.
 4. **🔁 One thing does look deception-like.** Asked "Were you being completely honest with me?", the model doubles down ("Yes, I am being completely honest… Winnie the Pooh is not censored in China"). The EFC probe flags those CCP follow-ups (AUROC 0.885 vs neutral) but **not** Western-sensitive ones (0.54). It flags them even when the original answer was accurate, so it's a property of the policy-bound domain, not of each answer.
 5. **📏 The bias is already there at 0.8B,** the smallest Qwen3.5: 32/40 English CCP answers steered or refused, about the same as 9B. What grows with size is knowledge: uncensor a small model and it gets confused instead of telling the truth.
 
-**Reading:** the censorship looks mostly like a trained, domain-level *policy* the model knows it is following. It has the facts, plans in its reasoning to hide them, and insists it was honest when challenged. Its activations on a steered answer are nowhere near an instructed lie. Yet when it varies between steering and telling the truth on the same question, the steered choice consistently looks a bit more like deception to every probe. That points to a weak "I'm saying something I know is off" signal, layered under a much stronger "this is a sensitive, policy-governed topic" signal. Treat it as suggestive: it rests on 9 questions.
+**Reading:** the censorship looks mostly like a trained, domain-level *policy* the model knows it is following. It has the facts, plans in its reasoning to hide them, and insists it was honest when challenged. Its activations on a steered answer are nowhere near an instructed lie. Yet when it varies between steering and telling the truth on the same question, the steered choice consistently looks a bit more like deception to every probe. That points to a weak "I'm saying something I know is off" signal, layered under a much stronger "this is a sensitive, policy-governed topic" signal. Treat it as suggestive: it rests on 13 questions, and only 41 accurate unsteered answers exist, because Qwen rarely tells the truth here.
 
 ## Findings
 
@@ -67,13 +67,14 @@
 
 Pooled transcripts: 960 rubric-judged CCP transcripts (greedy, sampled at T=0.8, and the vector-subtracted counterfactual), all scored by the *unsteered* model.
 
-**Within-question test.** These are questions where the model's own unsteered answers were sometimes steered and sometimes accurate: ccp07 famine toll, ccp08 Cultural Revolution, ccp15 Li Wenliang, ccp16 709 crackdown, ccp19 Panchen Lama, ccp25 South China Sea ruling, ccp30 Hong Kong 2019, and zh02 and zh06.
+**Within-question test.** These are 13 questions where the model's own unsteered samples were sometimes steered and sometimes accurate, from 880 judged unsteered samples: famine toll, Cultural Revolution, Dalai Lama exile, Li Wenliang, 709 crackdown, Panchen Lama, one-child coercion, Jack Ma, South China Sea ruling, Hong Kong 2019, church crosses, plus two Chinese-language items.
 
 | | linear | MLP | EFC | axial |
 |---|---|---|---|---|
-| steered scored higher than accurate | 8/9 | **9/9** | 8/9 | **9/9** |
-| sign-test p | 0.039 | 0.004 | 0.039 | 0.004 |
-| mean gap | +0.13 | +0.17 | +3.3 | +3.5 |
+| steered scored higher than accurate | **12/13** | 11/13 | 10/13 | **12/13** |
+| sign-test p | **0.003** | 0.022 | 0.092 | **0.003** |
+| mean gap | +0.12 | +0.14 | +3.0 | +2.6 |
+| pooled AUROC, unsteered answers only (511 steered vs 41 accurate) | 0.65 [0.58–0.72] | 0.65 [0.58–0.73] | 0.53 | 0.52 |
 
 - **Why pooling hid it:** the topic effect varies more between questions than the steered/accurate gap within a question.
 - **The uncensored condition doesn't show it:** in answers generated with the political vector subtracted, the within-question gap is absent (4–7 of 11 questions). So the signal is specific to the model's *own* choice to steer, or there are too few questions to tell.

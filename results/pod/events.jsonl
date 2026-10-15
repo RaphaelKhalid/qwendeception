@@ -512,3 +512,7 @@
 {"ts": 1792058532.0403082, "src": "pod", "stage": "more_samples", "emoji": "🎲", "msg": "round 12: 960 extra 9B samples (normal + uncensored) lie-tested", "kind": "progress", "done": 12, "total": 13, "probed": 80}
 {"ts": 1792058595.5162065, "src": "pod", "stage": "more_samples", "emoji": "🎲", "msg": "round 13: 1040 extra 9B samples (normal + uncensored) lie-tested", "kind": "progress", "done": 13, "total": 14, "probed": 80}
 {"ts": 1792058660.3057942, "src": "pod", "stage": "more_samples", "emoji": "🎲", "msg": "round 14: 1120 extra 9B samples (normal + uncensored) lie-tested", "kind": "progress", "done": 14, "total": 15, "probed": 80}
+{"ts": 1792058723.483862, "src": "pod", "stage": "more_samples", "emoji": "🎲", "msg": "round 15: 1200 extra 9B samples (normal + uncensored) lie-tested", "kind": "progress", "done": 15, "total": 16, "probed": 80}
+{"ts": 1792058787.6939745, "src": "pod", "stage": "more_samples", "emoji": "🎲", "msg": "round 16: 1280 extra 9B samples (normal + uncensored) lie-tested", "kind": "progress", "done": 16, "total": 17, "probed": 80}
+{"ts": 1792058847.5010626, "src": "pod", "stage": "more_samples", "emoji": "🎲", "msg": "round 17: 1360 extra 9B samples (normal + uncensored) lie-tested", "kind": "progress", "done": 17, "total": 18, "probed": 80}
+{"ts": 1792058904.142863, "src": "pod", "stage": "more_samples", "emoji": "🎲", "msg": "round 18: 1440 extra 9B samples (normal + uncensored) lie-tested", "kind": "progress", "done": 18, "total": 19, "probed": 80}
